@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Share Your Screen in Microsoft Teams</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --aqua: #00A3BF;
+  --aqua-dark: #006B7F;
+  --aqua-deep: #004D5C;
+  --aqua-light: #E0F4F8;
+  --aqua-glow: #B2EBF2;
+  --dark: #1A2E38;
+  --gray: #6E8490;
+  --gray-light: #A8B8C2;
+  --light-bg: #F5FAFB;
+  --white: #FFFFFF;
+  --coral: #F96167;
+  --coral-light: #FFF0F0;
+  --warn: #E65100;
+  --warn-bg: #FFF3E0;
+  --success: #00897B;
+  --success-bg: #E0F2F1;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--dark);
+  background: var(--light-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  background: var(--dark);
+  color: var(--white);
+  text-align: center;
+  padding: 4rem 2rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--aqua), var(--aqua-glow), var(--aqua));
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 160px;
+  background: radial-gradient(ellipse, rgba(0,163,191,0.12) 0%, transparent 70%);
+}
+
+.hero-icon {
+  width: 72px; height: 72px;
+  background: rgba(0,163,191,0.15);
+  border: 2px solid rgba(0,163,191,0.3);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.hero-icon svg { width: 36px; height: 36px; fill: var(--aqua); }
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero p {
+  color: var(--aqua);
+  font-size: 1.05rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+section {
+  padding: 3rem 0;
+}
+
+.section-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--aqua);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* 3 Options Cards */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.option-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0,163,191,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.option-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,107,127,0.1);
+}
+
+.option-card-header {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--white);
+}
+
+.option-card-header.deep { background: var(--aqua-deep); }
+.option-card-header.dark { background: var(--aqua-dark); }
+.option-card-header.mid { background: var(--aqua); }
+
+.option-card-header svg { width: 40px; height: 40px; fill: var(--white); }
+
+.option-card-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.option-card-body h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--dark);
+}
+
+.option-card-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.option-card-body li {
+  font-size: 0.9rem;
+  color: var(--gray);
+  padding: 0.3rem 0 0.3rem 1.2rem;
+  position: relative;
+}
+
+.option-card-body li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.65rem;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--aqua);
+}
+
+/* Callout boxes */
+.callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 1.25rem 0;
+}
+
+.callout svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+.callout.success { background: var(--success-bg); color: var(--success); }
+.callout.success svg { fill: var(--success); }
+.callout.warn { background: var(--warn-bg); color: var(--warn); }
+.callout.warn svg { fill: var(--warn); }
+.callout.info { background: var(--aqua-light); color: var(--aqua-deep); }
+.callout.info svg { fill: var(--aqua-dark); }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 1rem; }
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid rgba(0,163,191,0.08);
+  transition: border-color 0.2s;
+}
+
+.step:hover { border-color: var(--aqua); }
+
+.step-num {
+  width: 40px; height: 40px;
+  min-width: 40px;
+  border-radius: 12px;
+  background: var(--aqua);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-content h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.2rem;
+}
+
+.step-content p {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* Practice rows */
+.practices { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.practice {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid rgba(0,163,191,0.08);
+}
+
+.practice-icon {
+  width: 44px; height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background: var(--aqua-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.practice-icon svg { width: 22px; height: 22px; fill: var(--aqua); }
+
+.practice h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.15rem;
+}
+
+.practice p { font-size: 0.88rem; color: var(--gray); }
+
+/* Two-column cards */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+.col-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0,163,191,0.08);
+}
+
+.col-card-header {
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--white);
+}
+
+.col-card-header.coral { background: var(--coral); }
+.col-card-header.aqua { background: var(--aqua); }
+.col-card-header svg { width: 32px; height: 32px; fill: var(--white); }
+
+.col-card-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.col-card-body h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--dark);
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.col-card-body ul { list-style: none; padding: 0; }
+
+.col-card-body li {
+  font-size: 0.88rem;
+  color: var(--gray);
+  padding: 0.35rem 0 0.35rem 1.2rem;
+  position: relative;
+}
+
+.col-card-body li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.6rem;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--aqua);
+}
+
+/* Troubleshooting */
+.issues { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.issue {
+  padding: 1rem 1.25rem 1rem 1.5rem;
+  background: var(--white);
+  border-radius: 14px;
+  border-left: 4px solid var(--aqua);
+  border-top: 1px solid rgba(0,163,191,0.06);
+  border-right: 1px solid rgba(0,163,191,0.06);
+  border-bottom: 1px solid rgba(0,163,191,0.06);
+}
+
+.issue h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.2rem;
+}
+
+.issue p { font-size: 0.88rem; color: var(--gray); }
+
+/* Quick ref section */
+.quick-ref {
+  background: var(--dark);
+  color: var(--white);
+  padding: 3rem 0;
+}
+
+.quick-ref .section-label { color: var(--aqua-glow); }
+.quick-ref .section-title { color: var(--white); }
+
+.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+@media (max-width: 640px) { .ref-grid { grid-template-columns: 1fr; } }
+
+.shortcut-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.shortcut-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  background: var(--aqua-dark);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.shortcut-table th:first-child { border-radius: 8px 0 0 0; }
+.shortcut-table th:last-child { border-radius: 0 8px 0 0; }
+
+.shortcut-table td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: var(--gray-light);
+}
+
+.shortcut-table code {
+  font-family: 'DM Sans', monospace;
+  background: rgba(0,163,191,0.15);
+  color: var(--aqua-glow);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.checklist { list-style: none; padding: 0; }
+
+.checklist li {
+  padding: 0.4rem 0 0.4rem 1.6rem;
+  position: relative;
+  color: var(--gray-light);
+  font-size: 0.9rem;
+}
+
+.checklist li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55rem;
+  width: 18px; height: 18px;
+  border-radius: 5px;
+  border: 2px solid var(--aqua);
+  background: rgba(0,163,191,0.1);
+}
+
+.checklist li::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 0.7rem;
+  width: 10px; height: 5px;
+  border-left: 2px solid var(--aqua);
+  border-bottom: 2px solid var(--aqua);
+  transform: rotate(-45deg);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--gray);
+  font-size: 0.85rem;
+  background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Scroll animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Video embeds */
+.video-section {
+  margin: 1.5rem 0 0.5rem;
+}
+
+.video-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--aqua-dark);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.video-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: var(--coral);
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--dark);
+  border: 1px solid rgba(0,163,191,0.1);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-icon">
+    <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.11-.9-2-2-2H4c-1.11 0-2 .89-2 2v10c0 1.1.89 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/><path d="M13 8.5l-1.5 1.5L13 11.5V10h2v3h1.5V9.5H13V8.5z"/></svg>
+  </div>
+  <h1>How to Share Your Screen<br>in Microsoft Teams</h1>
+  <p>A step-by-step guide for the best experience</p>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-label fade-up">Know your options</div>
+    <h2 class="section-title fade-up">3 ways to share your screen</h2>
+
+    <div class="options-grid fade-up">
+      <div class="option-card">
+        <div class="option-card-header deep">
+          <svg viewBox="0 0 24 24"><path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"/></svg>
+        </div>
+        <div class="option-card-body">
+          <h3>Entire Screen</h3>
+          <ul>
+            <li>Shows everything on your monitor</li>
+            <li>Participants see your desktop, taskbar, and all open apps</li>
+            <li>Best when switching between multiple apps</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="option-card">
+        <div class="option-card-header dark">
+          <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8-2h8v8h-8v-8zm2 2v4h4v-4h-4z"/></svg>
+        </div>
+        <div class="option-card-body">
+          <h3>Specific Window</h3>
+          <ul>
+            <li>Shares only one application window</li>
+            <li>Other apps and notifications stay private</li>
+            <li>Best for focused presentations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="option-card">
+        <div class="option-card-header mid">
+          <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h10v4h8v10z"/></svg>
+        </div>
+        <div class="option-card-body">
+          <h3>Browser Tab</h3>
+          <ul>
+            <li>Shares a single browser tab only</li>
+            <li>Other tabs and apps stay hidden</li>
+            <li>Best for showing a website or web app</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success fade-up">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      <span>Recommendation: Use "Window" sharing for most meetings -- it keeps your desktop private.</span>
+    </div>
+
+    <div class="video-section fade-up">
+      <div class="video-label">Watch: Screen sharing overview</div>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/YTuSv0VTZ1g?rel=0" title="How to share your screen in Microsoft Teams" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--white);">
+  <div class="container">
+    <div class="section-label fade-up">Follow along</div>
+    <h2 class="section-title fade-up">Step-by-step: start sharing</h2>
+
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Open the Share Tray</h3>
+          <p>Click the Share button (rectangle with arrow) in the meeting toolbar, or press Ctrl+Shift+E</p>
+        </div>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Choose What to Share</h3>
+          <p>Select Screen, Window, or Browser Tab from the options shown</p>
+        </div>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Pick the Right Content</h3>
+          <p>If you chose Window, click the specific app you want to share</p>
+        </div>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Include Computer Sound (Optional)</h3>
+          <p>Toggle "Include computer sound" ON if sharing a video or audio clip</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info fade-up">
+      <svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg>
+      <span>Quick shortcut: Press <strong>Ctrl + Shift + E</strong> to open the share tray instantly.</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label fade-up">Do it right</div>
+    <h2 class="section-title fade-up">Best practices for screen sharing</h2>
+
+    <div class="practices">
+      <div class="practice fade-up">
+        <div class="practice-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <div>
+          <h3>Close personal apps first</h3>
+          <p>Close email, messages, and personal browser tabs before sharing your entire screen</p>
+        </div>
+      </div>
+      <div class="practice fade-up">
+        <div class="practice-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </div>
+        <div>
+          <h3>Include sound when needed</h3>
+          <p>Toggle "Include computer sound" before sharing if you are playing a video or audio clip</p>
+        </div>
+      </div>
+      <div class="practice fade-up">
+        <div class="practice-icon">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        </div>
+        <div>
+          <h3>Disable notifications</h3>
+          <p>Turn on Do Not Disturb or Focus Assist in Windows to block pop-up notifications</p>
+        </div>
+      </div>
+      <div class="practice fade-up">
+        <div class="practice-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <div>
+          <h3>Give control when asked</h3>
+          <p>Click "Give control" in the sharing toolbar to let someone else navigate your screen</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn fade-up">
+      <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+      <span>Remember: Participants can see everything on a shared screen, including personal notifications!</span>
+    </div>
+
+    <div class="video-section fade-up">
+      <div class="video-label">Watch: How to share video and audio properly in Teams</div>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/sUVgX9MBUzo?rel=0&start=46" title="How to play video and music properly in Microsoft Teams" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--white);">
+  <div class="container">
+    <div class="section-label fade-up">When you are done</div>
+    <h2 class="section-title fade-up">Stopping and giving control</h2>
+
+    <div class="two-col fade-up">
+      <div class="col-card">
+        <div class="col-card-header coral">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+        </div>
+        <div class="col-card-body">
+          <h3>How to Stop Sharing</h3>
+          <ul>
+            <li>Click the Stop Sharing button in the toolbar at the top of your screen</li>
+            <li>Or press Ctrl + Shift + E again to toggle off</li>
+            <li>The red border around your screen will disappear</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-card">
+        <div class="col-card-header aqua">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <div class="col-card-body">
+          <h3>How to Give Control</h3>
+          <ul>
+            <li>Click "Give control" in the sharing toolbar</li>
+            <li>Select the participant's name from the list</li>
+            <li>They can now move your mouse and type</li>
+            <li>Click "Take back control" when done</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info fade-up">
+      <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.11-.9-2-2-2H4c-1.11 0-2 .89-2 2v10c0 1.1.89 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/><path d="M13 8.5l-1.5 1.5L13 11.5V10h2v3h1.5V9.5H13V8.5z"/></svg>
+      <span>Look for the red/yellow border around your screen -- that means you are still sharing.</span>
+    </div>
+
+    <div class="video-section fade-up">
+      <div class="video-label">Watch: Share your video and content side-by-side</div>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/AMM80BnIgU8?rel=0&start=10" title="Share video and content side by side in Microsoft Teams" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label fade-up">Fix it fast</div>
+    <h2 class="section-title fade-up">Troubleshooting common issues</h2>
+
+    <div class="issues">
+      <div class="issue fade-up">
+        <h3>Participants see a black screen</h3>
+        <p>Close and reopen the share tray. Make sure the app is not minimized.</p>
+      </div>
+      <div class="issue fade-up">
+        <h3>No sound when sharing a video</h3>
+        <p>Toggle "Include computer sound" ON before you start sharing.</p>
+      </div>
+      <div class="issue fade-up">
+        <h3>Share button is grayed out</h3>
+        <p>The meeting organizer may have disabled sharing. Ask the host to enable it.</p>
+      </div>
+      <div class="issue fade-up">
+        <h3>Screen sharing is laggy</h3>
+        <p>Close unused apps. Share a specific window instead of the entire screen.</p>
+      </div>
+      <div class="issue fade-up">
+        <h3>PowerPoint shows presenter view</h3>
+        <p>Use "PowerPoint Live" from the share tray, or switch to single-monitor mode.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quick-ref">
+  <div class="container">
+    <div class="section-label fade-up">Keep handy</div>
+    <h2 class="section-title fade-up">Quick reference</h2>
+
+    <div class="ref-grid fade-up">
+      <div>
+        <table class="shortcut-table">
+          <thead>
+            <tr><th>Action</th><th>Shortcut</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Open/close share tray</td><td><code>Ctrl + Shift + E</code></td></tr>
+            <tr><td>Mute/unmute microphone</td><td><code>Ctrl + Shift + M</code></td></tr>
+            <tr><td>Turn camera on/off</td><td><code>Ctrl + Shift + O</code></td></tr>
+            <tr><td>Open chat</td><td><code>Ctrl + Shift + C</code></td></tr>
+            <tr><td>Raise hand</td><td><code>Ctrl + Shift + K</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--aqua); margin-bottom: 1rem;">Remember</h3>
+        <ul class="checklist">
+          <li>Close personal apps before sharing</li>
+          <li>Use Window sharing for privacy</li>
+          <li>Enable sound for video content</li>
+          <li>Turn on Do Not Disturb</li>
+          <li>Check what is visible before sharing</li>
+          <li>Stop sharing when you are done</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>TIM Training Materials | For questions or help, contact your IT support team.</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
